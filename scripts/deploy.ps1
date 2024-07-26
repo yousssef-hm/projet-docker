@@ -1,13 +1,16 @@
-# Définir le variable
-$composePath = "C:\Users\Youssef\Desktop\Projet.GitHub\docker-compose.yml"
+# Chemins de base, modifiables par l'utilisateur
+$repoUrl = "https://github.com/yousssef-hm/projet-docker.git"
+$projectDir = ".\projet-docker"
 
-# Mettre à jour les images Docker avec un message
-Write-Output "Updating Docker images..."
-docker-compose -f $composeFile pull
+# Cloner le dépôt
+Write-Host "Clonage du dépôt depuis $repoUrl..."
+git clone $repoUrl
 
-# Lancer les services
-Write-Output "Starting Docker services..."
-docker-compose -f $composePath up -d
+# Se déplacer dans le répertoire du projet
+Set-Location -Path $projectDir
 
-# Un meeasge de succes
-Write-Output "Deployment completed successfully."
+# Construire et démarrer les services
+Write-Host "Construction et démarrage des services..."
+docker-compose up --build -d
+
+Write-Host "Déploiement terminé. L'application est accessible à http://localhost"
